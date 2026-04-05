@@ -7,8 +7,10 @@ services:
     ports:
       - '5678:5678'
     environment:
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
       - N8N_HOST=${SERVICE_FQDN_N8N}
       - N8N_PROTOCOL=https
+      - WEBHOOK_URL=https://${SERVICE_FQDN_N8N}/
       - NODE_ENV=production
       - EXECUTIONS_MODE=queue
       - QUEUE_BULL_REDIS_HOST=redis
@@ -27,7 +29,7 @@ services:
     depends_on:
       - postgres
       - redis
-    command: start --tunnel # Manter se o Coolify depender disso, caso contrário, pode remover
+    command: start
 
   n8n-worker:
     image: n8nio/n8n:latest
